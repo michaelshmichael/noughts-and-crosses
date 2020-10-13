@@ -17,6 +17,12 @@ body {
     background-color: powderblue;
 }
 
+.boardSquare {
+    text-align: center;
+    font-size: 60px;
+    padding-top: 25%;
+}
+
 .middle {
     border-left: 1px solid black;
     border-right: 1px solid black;
