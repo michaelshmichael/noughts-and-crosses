@@ -1,7 +1,36 @@
 h1 {
-    color: rgb(62, 179, 62);
+    color: rgb(62, 64, 179);
+    text-align: center;
 }
 
 body {
     background-color: rgb(250, 164, 164);
 }
+
+.boardGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    margin: 0 auto;
+    height: 600px;
+    width: 600px;;
+    background-color: powderblue;
+}
+
+.middle {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.central {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.middleCentral {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
