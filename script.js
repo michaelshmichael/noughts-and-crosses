@@ -5,14 +5,16 @@ const gameBoard = ( () => {
     const boardSquares = Array.from(document.querySelectorAll('.boardSquare'));
     console.log(boardSquares);
 
-    function updateSquare(){
-        console.log('clicked')
-    }
-
     function addEventListeners(){
         boardSquares.forEach((square) =>{
             square.addEventListener("click", updateSquare)
         })
+    }
+
+    function updateSquare(e){
+        //MAKE THE SQUARE SHOW THE PLAYER SIGN
+        e.target.textContent = "T";
+        e.target.removeEventListener("click", updateSquare);
     }
 
     function render(){
@@ -35,27 +37,16 @@ const Player = (name, sign) => {
 // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Object with Game Logic
 const game = ( () => {
-
     const player1 = Player("Player 1", "X");
     const player2 = Player("Player 2", "O");
-
-    function changePlayer() {
-        player1.active = (player1.active) ? false : true;
-        player2.active = (player2.active) ? false : true;
-        console.log(2+2)
-    }
-    
-    function getActivePlayerSign() {
-        return (player1.active) ? player1.sign : player2.sign;
-    }
 
     function startGame(){
         gameBoard.addEventListeners();
         gameBoard.render()
-
         console.log(player1)
+        console.log(player2)
     };
-    return{changePlayer, getActivePlayerSign, startGame};
+    return{startGame};
 })();
 
 game.startGame();
