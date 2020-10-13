@@ -5,13 +5,23 @@ const gameBoard = ( () => {
     const boardSquares = Array.from(document.querySelectorAll('.boardSquare'));
     console.log(boardSquares);
 
+    function updateSquare(){
+        console.log('clicked')
+    }
+
+    function addEventListeners(){
+        boardSquares.forEach((square) =>{
+            square.addEventListener("click", updateSquare)
+        })
+    }
+
     function render(){
         for(i = 0; i < board.length; i++){
             boardSquares[i].textContent = board[i];
         }
     };
 
-    return {render};
+    return {render, addEventListeners};
 })();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +50,10 @@ const game = ( () => {
     }
 
     function startGame(){
+        gameBoard.addEventListeners();
         gameBoard.render()
+
+        console.log(player1)
     };
     return{changePlayer, getActivePlayerSign, startGame};
 })();
