@@ -22,21 +22,14 @@ const gameBoard = ( () => {
         render();
         game.swapPlayer();
         e.target.removeEventListener("click", updateBoard);
+        console.log(board)
     }
-
-    // function updateSquare(e){
-    //     //MAKE THE SQUARE SHOW THE PLAYER SIGN
-    //     e.target.textContent = player1.sign;
-    //     game.swapPlayer();
-    //     e.target.removeEventListener("click", updateSquare);
-    // }
 
     function render(){
         for(i = 0; i < board.length; i++){
             boardSquares[i].textContent = board[i];
         }
     };
-
     return {render, addEventListeners, updateBoard};
 })();
 
@@ -49,17 +42,31 @@ const game = ( () => {
     function startGame(){
         gameBoard.addEventListeners();
         gameBoard.render()
-        console.log(player1)
-        console.log(player2)
     };
 
+    //Can be made ternary
     function swapPlayer() {
-        player1.active = (player1.active) ? false : true;
-        player2.active = (player2.active) ? false : true;
+        if(player1.active === false) {
+            player1.active = true;
+        } else {
+            player1.active = false;
+        };
+        if(player2.active === false) {
+            player2.active = true;
+        } else {
+            player2.active = false;
+        };
     }
 
+    //Can be made ternary
     function getActivePlayerSign() {
-        return (player1.active) ? player1.sign : player2.sign;
+        let activePlayerSign = '';
+        if(player1.active === true){
+            activePlayerSign = player1.sign;
+        } else {
+            activePlayerSign = player2.sign;
+        }
+        return(activePlayerSign)
     }
 
     return{startGame, swapPlayer, getActivePlayerSign};
