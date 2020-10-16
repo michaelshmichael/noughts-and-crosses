@@ -29,19 +29,19 @@ body {
 }
 
 .middle {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-left: 1px solid rgb(250, 220, 164);
+    border-right: 1px solid rgb(250, 220, 164);
 }
 
 .central {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid rgb(250, 220, 164);
+    border-bottom: 1px solid rgb(250, 220, 164);
 }
 
 .middleCentral {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-left: 1px solid rgb(250, 220, 164);
+    border-right: 1px solid rgb(250, 220, 164);
+    border-top: 1px solid rgb(250, 220, 164);
+    border-bottom: 1px solid rgb(250, 220, 164);
 }
 
