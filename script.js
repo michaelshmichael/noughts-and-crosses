@@ -11,7 +11,14 @@ const gameBoard = ( () => {
 
     let board = ["","","","","","","","","",];
     const boardSquares = Array.from(document.querySelectorAll('.boardSquare'));
+    const restartButton = document.getElementById('restartButton')
     let hasWon = false;
+
+    restartButton.addEventListener("click", function(){
+        board = ["","","","","","","","","",];
+        render();
+        game.restartGame();
+    })
 
     function addEventListeners(){
         boardSquares.forEach((square) =>{
@@ -100,9 +107,11 @@ const game = ( () => {
     };
 
     function cacheDom(){
+        this.nameInputForm = document.querySelector(".nameInputForm")
         this.startGameButton = document.getElementById("startGame");
         this.player1Name = document.getElementById('player1Name');
         this.player2Name = document.getElementById('player2Name');
+        
     }
 
     function addListeners(){
@@ -110,8 +119,14 @@ const game = ( () => {
     }
 
     function startGame(e){
+        nameInputForm.remove();
         e.preventDefault();
         console.log("Game started")
+        setPlayerNames();
+        gameBoard.addEventListeners();
+    }
+
+    function restartGame(){
         setPlayerNames();
         gameBoard.addEventListeners();
     }
@@ -156,11 +171,7 @@ const game = ( () => {
         }
     }
 
-    return{init, swapPlayer, getActivePlayerSign, endGame};
+    return{init, swapPlayer, getActivePlayerSign, endGame, restartGame};
 })();
 
 game.init()
-
-// assign names to the input table when click start game button
-// start game with the name values assigned to each player
-// 

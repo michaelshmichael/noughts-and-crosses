@@ -2,7 +2,7 @@ h1 {
     color: rgb(122, 124, 255);
     text-align: center;
     font-family: 'Fredoka One', cursive;
-    margin-bottom: 100px;
+    margin-bottom: 40px;
     font-size: 50px;
 }
 
@@ -10,13 +10,13 @@ body {
     background-color: rgb(250, 220, 164);
 }
 
-#nameInputTable {
+.nameInputForm {
     font-family: 'Fredoka One', cursive;
     border: 2px solid black;
     width: 200px;
     padding: 10px;
     text-align: center;
-
+    margin: 0 auto 40px auto;
 }
 
 .boardGrid {
