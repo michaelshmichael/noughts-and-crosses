@@ -6,22 +6,15 @@
   <title>Noughts and Crosses</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 <h1> Noughts and Crosses</h1>
 
-<div id = "inputTableContainer" >
-  <form class = "nameInputForm">
-    <label>Player 1 Name</label>
-    <input type = "text" id = "player1Name" autocomplete = "off">
-    <label>Player 2 Name</label>
-    <input type = "text" id = "player2Name" autocomplete = "off">
-    <button id = "startGame">Let's Play!</button>
-  </form>
-</div>
 
-<div class = "boardGrid">
+<div class = "boardAndScoreContainer">
+  <div class = "boardGrid">
     <div id = "0" class = "boardSquare"></div>
     <div id = "1" class = "boardSquare middle"></div>
     <div id = "2" class = "boardSquare"></div>
@@ -31,11 +24,34 @@
     <div id = "6" class = "boardSquare"></div>
     <div id = "7" class = "boardSquare middle"></div>
     <div id = "8" class = "boardSquare"></div>
+  </div>
+
+  <div class = "scoresCounterContainer">
+    <div id = "inputTableContainer">
+      <form class = "nameInputForm">
+        <label>Player 1 Name</label>
+        <input type = "text" id = "player1Name" autocomplete = "off">
+        <br>
+        <label>Player 2 Name</label>
+        <input type = "text" id = "player2Name" autocomplete = "off">
+        <br>
+        <button id = "startGame" class="ui inverted violet button">Let's Play!</button>
+      </form>
+    </div>
+
+    <div class = "scoresCounter">
+
+    </div>
+    <div id = "restartButtonContainer">
+      <button id = "restartButton">New Game</button>
+      <button id = "newPlayersButton">New Players</button>
+    </div>
+    
+    </div>
+  </div>
 </div>
 
-<div id = "restartButton">
-  <button>New Game</button>
-</div>
+
 
 <script src = "script.js"></script>
 

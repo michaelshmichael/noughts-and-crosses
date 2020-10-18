@@ -101,6 +101,9 @@ const game = ( () => {
     let player1 = Player('Player 1', "X");
     let player2 = Player('Player 2', "O");
 
+    let player1ScoreCount = 0;
+    let player2ScoreCount = 0;
+
     function init(){
         cacheDom();
         addListeners();
@@ -111,7 +114,7 @@ const game = ( () => {
         this.startGameButton = document.getElementById("startGame");
         this.player1Name = document.getElementById('player1Name');
         this.player2Name = document.getElementById('player2Name');
-        
+        this.scoresCounter = document.querySelector('.scoresCounter')
     }
 
     function addListeners(){
@@ -119,15 +122,26 @@ const game = ( () => {
     }
 
     function startGame(e){
-        nameInputForm.remove();
         e.preventDefault();
-        console.log("Game started")
         setPlayerNames();
         gameBoard.addEventListeners();
     }
 
+    function displayNames(){
+        player1Score = document.createElement('div');
+        player1Score.textContent = `${player1.name} Score: ${player1ScoreCount}`
+        scoresCounter.appendChild(player1Score);
+        player2Score = document.createElement('div');
+        player2Score.textContent = `${player2.name} Score: ${player2ScoreCount}`
+        scoresCounter.appendChild(player2Score);
+    }
+
+    function updateScores(){
+        player1Score.textContent = `${player1.name} Score: ${player1ScoreCount}`
+        player2Score.textContent = `${player2.name} Score: ${player2ScoreCount}`
+    }
+
     function restartGame(){
-        setPlayerNames();
         gameBoard.addEventListeners();
     }
 
@@ -136,6 +150,7 @@ const game = ( () => {
         console.log(player1.name)
         player2.name = player2Name.value;
         console.log(player2.name)
+        displayNames();
     }
 
     //Can be made ternary
@@ -163,11 +178,16 @@ const game = ( () => {
         return(activePlayerSign)
     }
     
+    // This is horrendously DRY
     function endGame(){
         if(player1.active === true){
-            console.log(`${player1.name} has won`)
+            alert(`${player1.name} wins`)
+            player1ScoreCount ++;
+            updateScores();
         } else {
-            console.log(`${player2.name} has won`)
+            alert(`${player2.name} wins`)
+            player2ScoreCount ++;
+            updateScores();
         }
     }
 
@@ -175,3 +195,7 @@ const game = ( () => {
 })();
 
 game.init()
+
+// add a score counter
+// stylise the buttons and name input
+// add AI...
