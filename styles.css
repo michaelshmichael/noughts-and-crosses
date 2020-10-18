@@ -10,6 +10,15 @@ body {
     background-color: rgb(250, 220, 164);
 }
 
+#nameInputTable {
+    font-family: 'Fredoka One', cursive;
+    border: 2px solid black;
+    width: 200px;
+    padding: 10px;
+    text-align: center;
+
+}
+
 .boardGrid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

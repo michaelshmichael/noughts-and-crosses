@@ -12,10 +12,11 @@ const gameBoard = ( () => {
     let board = ["","","","","","","","","",];
     const boardSquares = Array.from(document.querySelectorAll('.boardSquare'));
     let hasWon = false;
+
     function addEventListeners(){
         boardSquares.forEach((square) =>{
             square.addEventListener("click", updateBoard)
-        })
+        });
     }
 
     function removeEventListeners(){
@@ -43,36 +44,36 @@ const gameBoard = ( () => {
     //Really WET Solution - Surely a better way with array manipulation
     function checkForWin(){
         if((board[0] === board[3]) && (board[0] === board[6]) && board[0] != ""){
-            console.log(`Player ${board[0]} WON`)
             removeEventListeners();
+            game.endGame();
             hasWon = true;
         } else if ((board[1] === board[4]) && (board[1] === board[7]) && board[1] != ""){
-            console.log(`Player ${board[1]} WON`)
             removeEventListeners();
+            game.endGame();
             hasWon = true;
         } else if ((board[2] === board[5]) && (board[2] === board[8]) && board[2] != ""){
-            console.log(`Player ${board[2]} WON`)
             removeEventListeners();
+            game.endGame();
             hasWon = true;
         } else if ((board[0] === board[1]) && (board[0] === board[2]) && board[0] != ""){
-            console.log(`Player ${board[0]} WON`)
             removeEventListeners();
+            game.endGame();
             hasWon = true;
         } else if ((board[3] === board[4]) && (board[3] === board[5]) && board[3] != ""){
-            console.log(`Player ${board[3]} WON`)
             removeEventListeners();
+            game.endGame();
             hasWon = true;
         } else if ((board[6] === board[7]) && (board[6] === board[8]) && board[6] != ""){
-            console.log(`Player ${board[6]} WON`)
             removeEventListeners();
+            game.endGame();
             hasWon = true;
         } else if ((board[0] === board[4]) && (board[0] === board[8]) && board[0] != ""){
-            console.log(`Player ${board[0]} WON`)
             removeEventListeners();
+            game.endGame();
             hasWon = true;
         } else if ((board[2] === board[4]) && (board[2] === board[6]) && board[2] != ""){
-            console.log(`Player ${board[2]} WON`)
             removeEventListeners();
+            game.endGame();
             hasWon = true;
         }
     };
@@ -84,20 +85,43 @@ const gameBoard = ( () => {
         }
     };
 
-    
     return {render, addEventListeners, updateBoard};
 })();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Object with Game Logic
 const game = ( () => {
-    const player1 = Player("Player 1", "X");
-    const player2 = Player("Player 2", "O");
+    let player1 = Player('Player 1', "X");
+    let player2 = Player('Player 2', "O");
 
-    function startGame(){
-        gameBoard.addEventListeners();
-        gameBoard.render()
+    function init(){
+        cacheDom();
+        addListeners();
     };
+
+    function cacheDom(){
+        this.startGameButton = document.getElementById("startGame");
+        this.player1Name = document.getElementById('player1Name');
+        this.player2Name = document.getElementById('player2Name');
+    }
+
+    function addListeners(){
+        startGameButton.addEventListener("click", startGame);
+    }
+
+    function startGame(e){
+        e.preventDefault();
+        console.log("Game started")
+        setPlayerNames();
+        gameBoard.addEventListeners();
+    }
+
+    function setPlayerNames(){
+        player1.name = player1Name.value;
+        console.log(player1.name)
+        player2.name = player2Name.value;
+        console.log(player2.name)
+    }
 
     //Can be made ternary
     function swapPlayer() {
@@ -123,8 +147,20 @@ const game = ( () => {
         }
         return(activePlayerSign)
     }
+    
+    function endGame(){
+        if(player1.active === true){
+            console.log(`${player1.name} has won`)
+        } else {
+            console.log(`${player2.name} has won`)
+        }
+    }
 
-    return{startGame, swapPlayer, getActivePlayerSign};
+    return{init, swapPlayer, getActivePlayerSign, endGame};
 })();
 
-game.startGame();
+game.init()
+
+// assign names to the input table when click start game button
+// start game with the name values assigned to each player
+// 
