@@ -10,27 +10,28 @@ const Player = (name, sign) => {
 const gameBoard = ( () => {
 
     let board = ["","","","","","","","","",];
-    let winningCombinations = [
-        [0,3,6],[1,4,7],[2,5,8],[0,1,2],[3,4,5],[6,7,8],
-        [0,4,8],[2,4,6]
-    ];
-
     const boardSquares = Array.from(document.querySelectorAll('.boardSquare'));
-
-
+    let hasWon = false;
     function addEventListeners(){
         boardSquares.forEach((square) =>{
             square.addEventListener("click", updateBoard)
         })
     }
 
+    function removeEventListeners(){
+        boardSquares.forEach((square) =>{
+            square.removeEventListener("click", updateBoard)
+        })
+    }
+
     function updateBoard(e){
         board[e.target.id] = game.getActivePlayerSign();
+        console.log(board)
         render();
         game.swapPlayer();
         e.target.removeEventListener("click", updateBoard);
-        console.log(board)
         checkForWin();
+        checkForDraw();
     }
 
     function render(){
@@ -43,22 +44,47 @@ const gameBoard = ( () => {
     function checkForWin(){
         if((board[0] === board[3]) && (board[0] === board[6]) && board[0] != ""){
             console.log(`Player ${board[0]} WON`)
+            removeEventListeners();
+            hasWon = true;
         } else if ((board[1] === board[4]) && (board[1] === board[7]) && board[1] != ""){
             console.log(`Player ${board[1]} WON`)
+            removeEventListeners();
+            hasWon = true;
         } else if ((board[2] === board[5]) && (board[2] === board[8]) && board[2] != ""){
             console.log(`Player ${board[2]} WON`)
+            removeEventListeners();
+            hasWon = true;
         } else if ((board[0] === board[1]) && (board[0] === board[2]) && board[0] != ""){
             console.log(`Player ${board[0]} WON`)
+            removeEventListeners();
+            hasWon = true;
         } else if ((board[3] === board[4]) && (board[3] === board[5]) && board[3] != ""){
             console.log(`Player ${board[3]} WON`)
+            removeEventListeners();
+            hasWon = true;
         } else if ((board[6] === board[7]) && (board[6] === board[8]) && board[6] != ""){
             console.log(`Player ${board[6]} WON`)
+            removeEventListeners();
+            hasWon = true;
         } else if ((board[0] === board[4]) && (board[0] === board[8]) && board[0] != ""){
             console.log(`Player ${board[0]} WON`)
+            removeEventListeners();
+            hasWon = true;
         } else if ((board[2] === board[4]) && (board[2] === board[6]) && board[2] != ""){
             console.log(`Player ${board[2]} WON`)
+            removeEventListeners();
+            hasWon = true;
         }
-    }
+    };
+
+    function checkForDraw(){
+        if(board.includes("")){
+        } else if (hasWon === false) {
+            console.log("Tie")
+        }
+    };
+
+    
     return {render, addEventListeners, updateBoard};
 })();
 
