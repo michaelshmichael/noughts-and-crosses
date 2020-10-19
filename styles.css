@@ -1,9 +1,11 @@
+
 h1 {
     color: rgb(122, 124, 255);
     text-align: center;
     font-family: 'Fredoka One', cursive;
     margin-bottom: 70px;
     font-size: 50px;
+    width: 1800px;
 }
 
 body {
@@ -14,7 +16,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 100%;
+    width: 1800px;
     height: 700px;
     color: rgb(250, 220, 164)
 }
@@ -45,7 +47,7 @@ body {
     font-family: 'Fredoka One', cursive;
     text-align: center;
     background-color: rgb(253, 171, 184);
-    width: 28%;
+    width: 400px;
     height: 600px;
 }
 
@@ -106,4 +108,24 @@ body {
     margin: 0 auto;
     width: 100%;
     margin-bottom: 20px;
+}
+
+@media (max-width: 1195px) {
+    h1 {
+        color: rgb(122, 124, 255);
+        text-align: center;
+        font-family: 'Fredoka One', cursive;
+        margin-bottom: 70px;
+        font-size: 50px;
+        width: 1000px;
+    }
+    .boardAndScoreContainer{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 1000px;
+        height: 700px;
+        color: rgb(250, 220, 164)
+    }
+    
 }
