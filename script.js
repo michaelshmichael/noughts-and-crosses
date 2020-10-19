@@ -11,13 +11,21 @@ const gameBoard = ( () => {
 
     let board = ["","","","","","","","","",];
     const boardSquares = Array.from(document.querySelectorAll('.boardSquare'));
-    const restartButton = document.getElementById('restartButton')
+    const restartButton = document.getElementById('restartButton');
+    const newPlayersButton = document.getElementById('newPlayersButton')
     let hasWon = false;
 
     restartButton.addEventListener("click", function(){
         board = ["","","","","","","","","",];
         render();
         game.restartGame();
+    })
+
+    newPlayersButton.addEventListener("click", function(){
+        board = ["","","","","","","","","",];
+        render();
+        game.removeScores();
+        init();
     })
 
     function addEventListeners(){
@@ -116,7 +124,7 @@ const game = ( () => {
         this.player2Name = document.getElementById('player2Name');
         this.scoresCounter = document.querySelector('.scoresCounter');
         this.displayWinnerContainer = document.querySelector(".displayWinnerContainer");
-        this.displayWinner = document.getElementById('displayWinner')
+        this.displayWinner = document.getElementById('displayWinner');
     }
 
     function addListeners(){
@@ -145,6 +153,12 @@ const game = ( () => {
         player2Score.textContent = `${player2.name}'s score: ${player2ScoreCount}`
     }
 
+    function removeScores(){
+        player1Score.textContent = '';
+        player2Score.textContent = '';
+        displayWinner.textContent = '';
+    }
+
     function restartGame(){
         gameBoard.addEventListeners();
         displayWinner.textContent = '';
@@ -169,6 +183,8 @@ const game = ( () => {
             player2.active = false;
         };
     }
+
+    
 
     //Can be made ternary
     function getActivePlayerSign() {
@@ -195,7 +211,7 @@ const game = ( () => {
         return(displayWinner)
     }
 
-    return{init, swapPlayer, getActivePlayerSign, endGame, restartGame};
+    return{init, swapPlayer, getActivePlayerSign, endGame, restartGame, removeScores};
 })();
 
 game.init()
