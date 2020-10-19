@@ -1,48 +1,41 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Player Factory Function
-const Player = (name, sign) => {
-    const active = false;
-    return{name, sign, active}
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Object with the board functionality
 const gameBoard = ( () => {
 
     let board = ["","","","","","","","","",];
+    let hasWon = false;
     const boardSquares = Array.from(document.querySelectorAll('.boardSquare'));
     const restartButton = document.getElementById('restartButton');
-    const newPlayersButton = document.getElementById('newPlayersButton')
-    let hasWon = false;
-
-    restartButton.addEventListener("click", function(){
+    const newPlayersButton = document.getElementById('newPlayersButton');
+    
+    restartButton.addEventListener("click", () => {
         board = ["","","","","","","","","",];
         render();
         game.restartGame();
     })
 
-    newPlayersButton.addEventListener("click", function(){
+    newPlayersButton.addEventListener("click", () => {
         board = ["","","","","","","","","",];
         render();
         game.removeScores();
-        init();
+        startGameButton.disabled = false;
+        game.init();
     })
 
     function addEventListeners(){
-        boardSquares.forEach((square) =>{
+        boardSquares.forEach((square) => {
             square.addEventListener("click", updateBoard)
         });
     }
 
     function removeEventListeners(){
-        boardSquares.forEach((square) =>{
+        boardSquares.forEach((square) => {
             square.removeEventListener("click", updateBoard)
         })
     }
 
     function updateBoard(e){
         board[e.target.id] = game.getActivePlayerSign();
-        console.log(board)
         render();
         game.swapPlayer();
         e.target.removeEventListener("click", updateBoard);
@@ -99,22 +92,28 @@ const gameBoard = ( () => {
             console.log("Tie")
         }
     };
-
     return {render, addEventListeners, updateBoard};
 })();
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Player Factory Function
+const Player = (name, sign) => {
+    const active = false;
+    return{name, sign, active}
+};
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Object with Game Logic
 const game = ( () => {
-    let player1 = Player('Player 1', "X");
-    let player2 = Player('Player 2', "O");
+    let player1 = Player('', "X");
+    let player2 = Player('', "O");
 
     let player1ScoreCount = 0;
     let player2ScoreCount = 0;
 
     function init(){
         cacheDom();
-        addListeners();
+        addStartGameListener();
     };
 
     function cacheDom(){
@@ -127,7 +126,7 @@ const game = ( () => {
         this.displayWinner = document.getElementById('displayWinner');
     }
 
-    function addListeners(){
+    function addStartGameListener(){
         startGameButton.addEventListener("click", startGame);
     }
 
@@ -135,6 +134,13 @@ const game = ( () => {
         e.preventDefault();
         setPlayerNames();
         gameBoard.addEventListeners();
+        startGameButton.disabled = true;
+    }
+
+    function setPlayerNames(){
+        player1.name = player1Name.value;
+        player2.name = player2Name.value;
+        displayNames();
     }
 
     function displayNames(){
@@ -164,58 +170,30 @@ const game = ( () => {
         displayWinner.textContent = '';
     }
 
-    function setPlayerNames(){
-        player1.name = player1Name.value;
-        player2.name = player2Name.value;
-        displayNames();
-    }
-
-    //Can be made ternary
     function swapPlayer() {
-        if(player1.active === false) {
-            player1.active = true;
-        } else {
-            player1.active = false;
-        };
-        if(player2.active === false) {
-            player2.active = true;
-        } else {
-            player2.active = false;
-        };
+        player1.active === false ? player1.active = true : player1.active = false;
+        player2.active === false ? player2.active = true : player2.active = false;
     }
 
-    
-
-    //Can be made ternary
     function getActivePlayerSign() {
         let activePlayerSign = '';
-        if(player1.active === true){
-            activePlayerSign = player1.sign;
-        } else {
-            activePlayerSign = player2.sign;
-        }
+        player1.active ? activePlayerSign = player1.sign : activePlayerSign = player2.sign;
         return(activePlayerSign)
     }
     
-    // This is horrendously DRY
     function endGame(){
         if(player1.active === true){
             displayWinner.textContent = `${player1.name} WINS!`
             player1ScoreCount ++;
-            updateScores();
         } else {
             displayWinner.textContent = `${player2.name} WINS!`
             player2ScoreCount ++;
-            updateScores();
         }
-        return(displayWinner)
+        updateScores();
     }
-
-    return{init, swapPlayer, getActivePlayerSign, endGame, restartGame, removeScores};
+    return{init, removeScores, restartGame, swapPlayer, getActivePlayerSign, endGame};
 })();
 
 game.init()
 
-// add a score counter
-// stylise the buttons and name input
 // add AI...
