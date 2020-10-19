@@ -114,7 +114,9 @@ const game = ( () => {
         this.startGameButton = document.getElementById("startGame");
         this.player1Name = document.getElementById('player1Name');
         this.player2Name = document.getElementById('player2Name');
-        this.scoresCounter = document.querySelector('.scoresCounter')
+        this.scoresCounter = document.querySelector('.scoresCounter');
+        this.displayWinnerContainer = document.querySelector(".displayWinnerContainer");
+        this.displayWinner = document.getElementById('displayWinner')
     }
 
     function addListeners(){
@@ -129,27 +131,28 @@ const game = ( () => {
 
     function displayNames(){
         player1Score = document.createElement('div');
-        player1Score.textContent = `${player1.name} Score: ${player1ScoreCount}`
+        player1Score.textContent = `${player1.name}'s score: ${player1ScoreCount}`
         scoresCounter.appendChild(player1Score);
         player2Score = document.createElement('div');
-        player2Score.textContent = `${player2.name} Score: ${player2ScoreCount}`
+        player2Score.textContent = `${player2.name}'s score: ${player2ScoreCount}`
         scoresCounter.appendChild(player2Score);
+        player1Name.value = '';
+        player2Name.value = '';
     }
 
     function updateScores(){
-        player1Score.textContent = `${player1.name} Score: ${player1ScoreCount}`
-        player2Score.textContent = `${player2.name} Score: ${player2ScoreCount}`
+        player1Score.textContent = `${player1.name}'s score: ${player1ScoreCount}`
+        player2Score.textContent = `${player2.name}'s score: ${player2ScoreCount}`
     }
 
     function restartGame(){
         gameBoard.addEventListeners();
+        displayWinner.textContent = '';
     }
 
     function setPlayerNames(){
         player1.name = player1Name.value;
-        console.log(player1.name)
         player2.name = player2Name.value;
-        console.log(player2.name)
         displayNames();
     }
 
@@ -181,14 +184,15 @@ const game = ( () => {
     // This is horrendously DRY
     function endGame(){
         if(player1.active === true){
-            alert(`${player1.name} wins`)
+            displayWinner.textContent = `${player1.name} WINS!`
             player1ScoreCount ++;
             updateScores();
         } else {
-            alert(`${player2.name} wins`)
+            displayWinner.textContent = `${player2.name} WINS!`
             player2ScoreCount ++;
             updateScores();
         }
+        return(displayWinner)
     }
 
     return{init, swapPlayer, getActivePlayerSign, endGame, restartGame};
