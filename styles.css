@@ -16,6 +16,7 @@ body {
     justify-content: center;
     width: 100%;
     height: 700px;
+    color: rgb(250, 220, 164)
 }
 
 .boardGrid {
@@ -43,20 +44,25 @@ body {
     align-items: center;
     font-family: 'Fredoka One', cursive;
     text-align: center;
-    background-color: pink;
+    background-color: rgb(253, 171, 184);
     width: 28%;
     height: 600px;
 }
 
 .nameInputForm{
+    padding-top: 15px;
     font-family: 'Fredoka One', cursive;
     height: 100%;
-    border: 2px solid black;
     font-size: 25px;
     width: 75%;
     margin: 0 auto;
     overflow: auto;
 }
+
+#startGame {
+    margin-top: 20px;
+}
+
 .scoresCounter{
     height: 40%;
     width: 100%;
@@ -87,4 +93,5 @@ body {
     justify-content: space-evenly;
     margin: 0 auto;
     width: 300px;
+    margin-bottom: 20px;
 }
