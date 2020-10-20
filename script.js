@@ -39,8 +39,8 @@ const gameBoard = ( () => {
         render();
         game.swapPlayer();
         e.target.removeEventListener("click", updateBoard);
-        checkForWin();
-        checkForDraw();
+        _checkForWin();
+        _checkForDraw();
     }
 
     function render(){
@@ -50,7 +50,7 @@ const gameBoard = ( () => {
     };
 
     //Really WET Solution - Surely a better way with array manipulation
-    function checkForWin(){
+    function _checkForWin(){
         if((board[0] === board[3]) && (board[0] === board[6]) && board[0] != ""){
             removeEventListeners();
             game.endGame();
@@ -86,7 +86,7 @@ const gameBoard = ( () => {
         }
     };
 
-    function checkForDraw(){
+    function _checkForDraw(){
         if(board.includes("")){
         } else if (hasWon === false) {
             console.log("Tie")
@@ -112,11 +112,11 @@ const game = ( () => {
     let player2ScoreCount = 0;
 
     function init(){
-        cacheDom();
-        addStartGameListener();
+        _cacheDom();
+        _addStartGameListener();
     };
 
-    function cacheDom(){
+    function _cacheDom(){
         this.nameInputForm = document.querySelector(".nameInputForm")
         this.startGameButton = document.getElementById("startGame");
         this.player1Name = document.getElementById('player1Name');
@@ -126,24 +126,24 @@ const game = ( () => {
         this.displayWinner = document.getElementById('displayWinner');
     }
 
-    function addStartGameListener(){
-        startGameButton.addEventListener("click", startGame);
+    function _addStartGameListener(){
+        startGameButton.addEventListener("click", _startGame);
     }
 
-    function startGame(e){
+    function _startGame(e){
         e.preventDefault();
-        setPlayerNames();
+        _setPlayerNames();
         gameBoard.addEventListeners();
         startGameButton.disabled = true;
     }
 
-    function setPlayerNames(){
+    function _setPlayerNames(){
         player1.name = player1Name.value;
         player2.name = player2Name.value;
-        displayNames();
+        _displayNames();
     }
 
-    function displayNames(){
+    function _displayNames(){
         player1Score = document.createElement('div');
         player1Score.textContent = `${player1.name}'s score: ${player1ScoreCount}`
         scoresCounter.appendChild(player1Score);
@@ -154,7 +154,7 @@ const game = ( () => {
         player2Name.value = '';
     }
 
-    function updateScores(){
+    function _updateScores(){
         player1Score.textContent = `${player1.name}'s score: ${player1ScoreCount}`
         player2Score.textContent = `${player2.name}'s score: ${player2ScoreCount}`
     }
@@ -189,7 +189,7 @@ const game = ( () => {
             displayWinner.textContent = `${player2.name} WINS!`
             player2ScoreCount ++;
         }
-        updateScores();
+        _updateScores();
     }
     return{init, removeScores, restartGame, swapPlayer, getActivePlayerSign, endGame};
 })();
