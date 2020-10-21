@@ -12,6 +12,7 @@ const gameBoard = ( () => {
         board = ["","","","","","","","","",];
         render();
         game.restartGame();
+        hasWon = false;
     })
 
     newPlayersButton.addEventListener("click", () => {
@@ -89,7 +90,8 @@ const gameBoard = ( () => {
     function _checkForDraw(){
         if(board.includes("")){
         } else if (hasWon === false) {
-            console.log("Tie")
+            displayWinner.textContent = "TIE!"
+            console.log("tie")
         }
     };
     return {render, addEventListeners, updateBoard};
@@ -126,15 +128,19 @@ const game = ( () => {
         this.displayWinner = document.getElementById('displayWinner');
     }
 
-    function _addStartGameListener(){
+    function _addStartGameListener(){  
         startGameButton.addEventListener("click", _startGame);
     }
 
     function _startGame(e){
+        if(player1Name.value != '' && player2Name.value != ''){
         e.preventDefault();
         _setPlayerNames();
         gameBoard.addEventListeners();
         startGameButton.disabled = true;
+        } else{
+            alert('Please enter names')
+        }
     }
 
     function _setPlayerNames(){
