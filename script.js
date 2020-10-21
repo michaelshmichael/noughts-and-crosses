@@ -49,42 +49,20 @@ const gameBoard = ( () => {
             boardSquares[i].textContent = board[i];
         }
     };
-
-    //Really WET Solution - Surely a better way with array manipulation
+    
     function _checkForWin(){
-        if((board[0] === board[3]) && (board[0] === board[6]) && board[0] != ""){
+        if((board[0] === board[3] && board[0] === board[6] && board[0] != "") ||
+           (board[1] === board[4] && board[1] === board[7] && board[1] != "") ||
+           (board[2] === board[5] && board[2] === board[8] && board[2] != "") ||
+           (board[0] === board[1] && board[0] === board[2] && board[0] != "") ||
+           (board[3] === board[4] && board[3] === board[5] && board[3] != "") ||
+           (board[6] === board[7] && board[6] === board[8] && board[6] != "") ||
+           (board[0] === board[4] && board[0] === board[8] && board[0] != "") ||
+           (board[2] === board[4] && board[2] === board[6] && board[2] != "")) {
             removeEventListeners();
             game.endGame();
             hasWon = true;
-        } else if ((board[1] === board[4]) && (board[1] === board[7]) && board[1] != ""){
-            removeEventListeners();
-            game.endGame();
-            hasWon = true;
-        } else if ((board[2] === board[5]) && (board[2] === board[8]) && board[2] != ""){
-            removeEventListeners();
-            game.endGame();
-            hasWon = true;
-        } else if ((board[0] === board[1]) && (board[0] === board[2]) && board[0] != ""){
-            removeEventListeners();
-            game.endGame();
-            hasWon = true;
-        } else if ((board[3] === board[4]) && (board[3] === board[5]) && board[3] != ""){
-            removeEventListeners();
-            game.endGame();
-            hasWon = true;
-        } else if ((board[6] === board[7]) && (board[6] === board[8]) && board[6] != ""){
-            removeEventListeners();
-            game.endGame();
-            hasWon = true;
-        } else if ((board[0] === board[4]) && (board[0] === board[8]) && board[0] != ""){
-            removeEventListeners();
-            game.endGame();
-            hasWon = true;
-        } else if ((board[2] === board[4]) && (board[2] === board[6]) && board[2] != ""){
-            removeEventListeners();
-            game.endGame();
-            hasWon = true;
-        }
+        } 
     };
 
     function _checkForDraw(){
