@@ -49,7 +49,7 @@ const gameBoard = ( () => {
             boardSquares[i].textContent = board[i];
         }
     };
-    
+
     function _checkForWin(){
         if((board[0] === board[3] && board[0] === board[6] && board[0] != "") ||
            (board[1] === board[4] && board[1] === board[7] && board[1] != "") ||
@@ -94,6 +94,7 @@ const game = ( () => {
     function init(){
         _cacheDom();
         _addStartGameListener();
+        checkAIToggle();
     };
 
     function _cacheDom(){
@@ -104,6 +105,7 @@ const game = ( () => {
         this.scoresCounter = document.querySelector('.scoresCounter');
         this.displayWinnerContainer = document.querySelector(".displayWinnerContainer");
         this.displayWinner = document.getElementById('displayWinner');
+        this.aiButton = document.getElementById('ai');
     }
 
     function _addStartGameListener(){  
@@ -118,6 +120,14 @@ const game = ( () => {
         startGameButton.disabled = true;
         } else{
             alert('Please enter names')
+        }
+    }
+
+    function checkAIToggle(){
+        if(aiButton.checked === true){
+            console.log("aiEnabled")
+        } else {
+            console.log("no AI")
         }
     }
 
