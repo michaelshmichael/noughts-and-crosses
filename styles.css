@@ -54,8 +54,8 @@ body {
 .nameInputForm{
     padding-top: 15px;
     font-family: 'Fredoka One', cursive;
-    height: 100%;
     font-size: 25px;
+    height: 226.125px;
     width: 75%;
     margin: 0 auto;
     overflow: auto;
@@ -65,6 +65,10 @@ body {
     font-family: 'Fredoka One', cursive;
     text-align: center;
     color: rgb(250, 220, 164)
+}
+
+.player2DataRemove {
+    display: none;
 }
 
 #startGame {

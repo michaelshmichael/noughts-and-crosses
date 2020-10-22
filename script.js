@@ -90,12 +90,13 @@ const game = ( () => {
 
     let player1ScoreCount = 0;
     let player2ScoreCount = 0;
-
+    let aiButton = document.getElementById('ai');
     function init(){
         _cacheDom();
         _addStartGameListener();
-        checkAIToggle();
     };
+
+    //remove second player visual before starting game
 
     function _cacheDom(){
         this.nameInputForm = document.querySelector(".nameInputForm")
@@ -105,35 +106,51 @@ const game = ( () => {
         this.scoresCounter = document.querySelector('.scoresCounter');
         this.displayWinnerContainer = document.querySelector(".displayWinnerContainer");
         this.displayWinner = document.getElementById('displayWinner');
-        this.aiButton = document.getElementById('ai');
+        this.player2Label = document.getElementById('player2Label')
     }
 
+    //check if the box is ticked
+    //if ticked:
+    aiButton.addEventListener("click", () => {
+            player2Label.classList.toggle('player2DataRemove')
+            player2Name.classList.toggle('player2DataRemove')
+    })
+    
     function _addStartGameListener(){  
         startGameButton.addEventListener("click", _startGame);
     }
 
     function _startGame(e){
-        if(player1Name.value != '' && player2Name.value != ''){
+        checkAI();
+        if((aiOn === false && player1Name.value != '' && player2Name.value != '') || (aiOn === true && player1Name.value != '')) {
         e.preventDefault();
         _setPlayerNames();
         gameBoard.addEventListeners();
         startGameButton.disabled = true;
+        // remove input form
         } else{
             alert('Please enter names')
         }
-    }
+    }   
 
-    function checkAIToggle(){
+    //make ternary
+    function checkAI(){
+        aiOn = false
         if(aiButton.checked === true){
-            console.log("aiEnabled")
+            console.log("Playing with AI")
+            aiOn = true
         } else {
-            console.log("no AI")
+            console.log("HUMAN2HUMAN")
         }
+        return(aiOn)
     }
 
     function _setPlayerNames(){
         player1.name = player1Name.value;
         player2.name = player2Name.value;
+        if(aiOn === true) {
+            player2.name = "HAL 9000";
+        }
         _displayNames();
     }
 
@@ -174,6 +191,8 @@ const game = ( () => {
         player1.active ? activePlayerSign = player1.sign : activePlayerSign = player2.sign;
         return(activePlayerSign)
     }
+
+    //display whose turn it is with small arrow
     
     function endGame(){
         if(player1.active === true){
