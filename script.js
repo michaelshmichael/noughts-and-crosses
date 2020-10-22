@@ -43,22 +43,24 @@ const gameBoard = ( () => {
         e.target.removeEventListener("click", updateBoard);
         _checkForWin();
         _checkForDraw();
-        if(aiOn === true) {
-            moveFromAI();
+        if(aiOn === true && hasWon === false) {
+            _moveFromAI();
         }
     }
+
     function _genRandomNumber(){
         return Math.floor(Math.random() * 9);
     }
 
-    function moveFromAI(){
+    function _moveFromAI(){
         do { 
             var ranNum = _genRandomNumber();
         } while (board[ranNum] !== '')
         board[ranNum] = game.getActivePlayerSign();
+        console.log(board)
         render();
         game.swapPlayer();
-        board[ranNum].removeEventListener("click", updateBoard);
+        boardSquares[ranNum].removeEventListener("click", updateBoard);
         _checkForWin();
         _checkForDraw();
     }
@@ -197,6 +199,7 @@ const game = ( () => {
 
     function restartGame(){
         gameBoard.addEventListeners();
+        player1.active = false;
         displayWinner.textContent = '';
     }
 
@@ -211,11 +214,6 @@ const game = ( () => {
         return(activePlayerSign)
     }
 
-    // not working
-    // function displayActivePlayer() {
-    //     player1.active ? displayActivePlayerText.textContent = player1.name : displayActivePlayerText.textCotent = player2.name;
-    // }
-    
     function endGame(){
         if(player1.active === true){
             displayWinner.textContent = `${player1.name} WINS!`
