@@ -21,6 +21,7 @@ const gameBoard = ( () => {
         game.removeScores();
         startGameButton.disabled = false;
         game.init();
+        inputTableContainer.classList.remove('playerDataRemove')
     })
 
     function addEventListeners(){
@@ -40,6 +41,24 @@ const gameBoard = ( () => {
         render();
         game.swapPlayer();
         e.target.removeEventListener("click", updateBoard);
+        _checkForWin();
+        _checkForDraw();
+        if(aiOn === true) {
+            moveFromAI();
+        }
+    }
+    function _genRandomNumber(){
+        return Math.floor(Math.random() * 9);
+    }
+
+    function moveFromAI(){
+        do { 
+            var ranNum = _genRandomNumber();
+        } while (board[ranNum] !== '')
+        board[ranNum] = game.getActivePlayerSign();
+        render();
+        game.swapPlayer();
+        board[ranNum].removeEventListener("click", updateBoard);
         _checkForWin();
         _checkForDraw();
     }
@@ -91,6 +110,7 @@ const game = ( () => {
     let player1ScoreCount = 0;
     let player2ScoreCount = 0;
     let aiButton = document.getElementById('ai');
+
     function init(){
         _cacheDom();
         _addStartGameListener();
@@ -106,14 +126,13 @@ const game = ( () => {
         this.scoresCounter = document.querySelector('.scoresCounter');
         this.displayWinnerContainer = document.querySelector(".displayWinnerContainer");
         this.displayWinner = document.getElementById('displayWinner');
-        this.player2Label = document.getElementById('player2Label')
+        this.player2Label = document.getElementById('player2Label');
+        this.inputTableContainer = document.getElementById('inputTableContainer')
     }
 
-    //check if the box is ticked
-    //if ticked:
     aiButton.addEventListener("click", () => {
-            player2Label.classList.toggle('player2DataRemove')
-            player2Name.classList.toggle('player2DataRemove')
+            player2Label.classList.toggle('playerDataRemove')
+            player2Name.classList.toggle('playerDataRemove')
     })
     
     function _addStartGameListener(){  
@@ -127,10 +146,8 @@ const game = ( () => {
         _setPlayerNames();
         gameBoard.addEventListeners();
         startGameButton.disabled = true;
-        // remove input form
-        } else{
-            alert('Please enter names')
-        }
+        inputTableContainer.classList.add('playerDataRemove')
+        }else{alert('Please enter names')}
     }   
 
     //make ternary
@@ -171,6 +188,8 @@ const game = ( () => {
     }
 
     function removeScores(){
+        player1ScoreCount = 0;
+        player2ScoreCount = 0;
         player1Score.textContent = '';
         player2Score.textContent = '';
         displayWinner.textContent = '';
@@ -192,7 +211,10 @@ const game = ( () => {
         return(activePlayerSign)
     }
 
-    //display whose turn it is with small arrow
+    // not working
+    // function displayActivePlayer() {
+    //     player1.active ? displayActivePlayerText.textContent = player1.name : displayActivePlayerText.textCotent = player2.name;
+    // }
     
     function endGame(){
         if(player1.active === true){
