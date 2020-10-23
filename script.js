@@ -3,6 +3,7 @@
 const gameBoard = ( () => {
 
     let board = ["","","","","","","","","",];
+    let notFullArray = true;
     let hasWon = false;
     const boardSquares = Array.from(document.querySelectorAll('.boardSquare'));
     const restartButton = document.getElementById('restartButton');
@@ -43,7 +44,8 @@ const gameBoard = ( () => {
         e.target.removeEventListener("click", updateBoard);
         _checkForWin();
         _checkForDraw();
-        if(aiOn === true && hasWon === false) {
+        notFullArray = board.includes('');
+        if(aiOn === true && hasWon === false && notFullArray === true) {
             _moveFromAI();
         }
     }
@@ -58,6 +60,7 @@ const gameBoard = ( () => {
         } while (board[ranNum] !== '')
         board[ranNum] = game.getActivePlayerSign();
         console.log(board)
+        console.log(ranNum)
         render();
         game.swapPlayer();
         boardSquares[ranNum].removeEventListener("click", updateBoard);
@@ -85,12 +88,11 @@ const gameBoard = ( () => {
             hasWon = true;
         } 
     };
-
+   
     function _checkForDraw(){
-        if(board.includes("")){
-        } else if (hasWon === false) {
+        notFullArray = board.includes('');
+        if (hasWon === false && notFullArray === false) {
             displayWinner.textContent = "TIE!"
-            console.log("tie")
         }
     };
     return {render, addEventListeners, updateBoard};
@@ -117,8 +119,6 @@ const game = ( () => {
         _cacheDom();
         _addStartGameListener();
     };
-
-    //remove second player visual before starting game
 
     function _cacheDom(){
         this.nameInputForm = document.querySelector(".nameInputForm")
@@ -152,14 +152,10 @@ const game = ( () => {
         }else{alert('Please enter names')}
     }   
 
-    //make ternary
     function checkAI(){
         aiOn = false
         if(aiButton.checked === true){
-            console.log("Playing with AI")
             aiOn = true
-        } else {
-            console.log("HUMAN2HUMAN")
         }
         return(aiOn)
     }
@@ -228,5 +224,3 @@ const game = ( () => {
 })();
 
 game.init()
-
-// add AI...
