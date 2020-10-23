@@ -134,6 +134,7 @@ const game = ( () => {
     aiButton.addEventListener("click", () => {
             player2Label.classList.toggle('playerDataRemove')
             player2Name.classList.toggle('playerDataRemove')
+            player2Name.value = ''
     })
     
     function _addStartGameListener(){  
