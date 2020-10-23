@@ -3,7 +3,6 @@
 const gameBoard = ( () => {
 
     let board = ["","","","","","","","","",];
-    let notFullArray = true;
     let hasWon = false;
     const boardSquares = Array.from(document.querySelectorAll('.boardSquare'));
     const restartButton = document.getElementById('restartButton');
@@ -50,6 +49,12 @@ const gameBoard = ( () => {
         }
     }
 
+    function render(){
+        for(i = 0; i < board.length; i++){
+            boardSquares[i].textContent = board[i];
+        }
+    };
+
     function _genRandomNumber(){
         return Math.floor(Math.random() * 9);
     }
@@ -67,12 +72,6 @@ const gameBoard = ( () => {
         _checkForWin();
         _checkForDraw();
     }
-
-    function render(){
-        for(i = 0; i < board.length; i++){
-            boardSquares[i].textContent = board[i];
-        }
-    };
 
     function _checkForWin(){
         if((board[0] === board[3] && board[0] === board[6] && board[0] != "") ||
@@ -141,24 +140,24 @@ const game = ( () => {
         startGameButton.addEventListener("click", _startGame);
     }
 
-    function _startGame(e){
-        checkAI();
-        if((aiOn === false && player1Name.value != '' && player2Name.value != '') || (aiOn === true && player1Name.value != '')) {
-        e.preventDefault();
-        _setPlayerNames();
-        gameBoard.addEventListeners();
-        startGameButton.disabled = true;
-        inputTableContainer.classList.add('playerDataRemove')
-        }else{alert('Please enter names')}
-    }   
-
-    function checkAI(){
+    function _checkAI(){
         aiOn = false
         if(aiButton.checked === true){
             aiOn = true
         }
         return(aiOn)
     }
+
+    function _startGame(e){
+        _checkAI();
+        if((aiOn === false && player1Name.value != '' && player2Name.value != '') || (aiOn === true && player1Name.value != '')) {
+        e.preventDefault();
+        _setPlayerNames();
+        gameBoard.addEventListeners();
+        startGameButton.disabled = true;
+        inputTableContainer.classList.add('playerDataRemove')
+        } else {alert('Please enter names')}
+    }   
 
     function _setPlayerNames(){
         player1.name = player1Name.value;
@@ -220,6 +219,7 @@ const game = ( () => {
         }
         _updateScores();
     }
+
     return{init, removeScores, restartGame, swapPlayer, getActivePlayerSign, endGame};
 })();
 
