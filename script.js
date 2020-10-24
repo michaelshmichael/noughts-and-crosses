@@ -5,8 +5,6 @@ const gameBoard = ( () => {
     let board = ["","","","","","","","","",];
     let hasWon = false;
     const boardSquares = Array.from(document.querySelectorAll('.boardSquare'));
-    const restartButton = document.getElementById('restartButton');
-    const newPlayersButton = document.getElementById('newPlayersButton');
     
     restartButton.addEventListener("click", () => {
         board = ["","","","","","","","","",];
@@ -27,7 +25,7 @@ const gameBoard = ( () => {
     function addEventListeners(){
         boardSquares.forEach((square) => {
             square.addEventListener("click", updateBoard)
-        });
+        })
     }
 
     function removeEventListeners(){
@@ -53,7 +51,7 @@ const gameBoard = ( () => {
         for(i = 0; i < board.length; i++){
             boardSquares[i].textContent = board[i];
         }
-    };
+    }
 
     function _genRandomNumber(){
         return Math.floor(Math.random() * 9);
@@ -64,8 +62,6 @@ const gameBoard = ( () => {
             var ranNum = _genRandomNumber();
         } while (board[ranNum] !== '')
         board[ranNum] = game.getActivePlayerSign();
-        console.log(board)
-        console.log(ranNum)
         render();
         game.swapPlayer();
         boardSquares[ranNum].removeEventListener("click", updateBoard);
@@ -86,14 +82,14 @@ const gameBoard = ( () => {
             game.endGame();
             hasWon = true;
         } 
-    };
+    }
    
     function _checkForDraw(){
         notFullArray = board.includes('');
         if (hasWon === false && notFullArray === false) {
             displayWinner.textContent = "TIE!"
         }
-    };
+    }
     return {render, addEventListeners, updateBoard};
 })();
 
@@ -107,9 +103,9 @@ const Player = (name, sign) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Object with Game Logic
 const game = ( () => {
+
     let player1 = Player('', "X");
     let player2 = Player('', "O");
-
     let player1ScoreCount = 0;
     let player2ScoreCount = 0;
     let aiButton = document.getElementById('ai');
@@ -117,7 +113,7 @@ const game = ( () => {
     function init(){
         _cacheDom();
         _addStartGameListener();
-    };
+    }
 
     function _cacheDom(){
         this.nameInputForm = document.querySelector(".nameInputForm")
@@ -143,9 +139,7 @@ const game = ( () => {
 
     function _checkAI(){
         aiOn = false
-        if(aiButton.checked === true){
-            aiOn = true
-        }
+        aiButton.checked === true ? aiOn = true : aiOn = false;
         return(aiOn)
     }
 
@@ -173,10 +167,10 @@ const game = ( () => {
         player1Score = document.createElement('div');
         player1Score.textContent = `${player1.name}'s score: ${player1ScoreCount}`
         scoresCounter.appendChild(player1Score);
+        player1Name.value = '';
         player2Score = document.createElement('div');
         player2Score.textContent = `${player2.name}'s score: ${player2ScoreCount}`
         scoresCounter.appendChild(player2Score);
-        player1Name.value = '';
         player2Name.value = '';
     }
 
@@ -211,13 +205,7 @@ const game = ( () => {
     }
 
     function endGame(){
-        if(player1.active === true){
-            displayWinner.textContent = `${player1.name} WINS!`
-            player1ScoreCount ++;
-        } else {
-            displayWinner.textContent = `${player2.name} WINS!`
-            player2ScoreCount ++;
-        }
+        player1.active === true ? (displayWinner.textContent = `${player1.name} WINS!`, player1ScoreCount ++) : (displayWinner.textContent = `${player2.name} WINS!`, player2ScoreCount ++);
         _updateScores();
     }
 
